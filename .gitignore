@@ -1,0 +1,12 @@
+#ignore bank statement
+*hdfc*.txt
+
+#ignore maven generated artifacts
+target/*/*
+
+#ignore IDE files
+.idea
+*.iml
+
+#ignore latop files
+.DS_Store
