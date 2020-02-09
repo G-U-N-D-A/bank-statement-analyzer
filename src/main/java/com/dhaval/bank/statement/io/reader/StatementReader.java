@@ -1,7 +1,8 @@
-package com.dhaval.statement.reader;
+package com.dhaval.bank.statement.io.reader;
 
-import com.dhaval.hdfc.HDFCFactory;
-import com.dhaval.hdfc.api.HDFCStatementValidator;
+import com.dhaval.bank.plugin.hdfc.factory.HDFCFactory;
+import com.dhaval.bank.plugin.hdfc.api.HDFCStatementValidator;
+import com.dhaval.bank.statement.io.object.Transaction;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,12 +19,13 @@ public class StatementReader {
     public List<Transaction> getTransactions(String fileName) throws FileNotFoundException {
         List<Transaction> txns = new ArrayList<>();
 
-        File file = new File(fileName);
+        File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
+
         Scanner scanner = new Scanner(file);
         while(scanner.hasNextLine()){
             String line = scanner.nextLine();
             if(isValidTransactionEntry(line)) {
-                txns.add(new Transaction(line));
+                txns.add(new Transaction(line.trim()));
             }
         }
 

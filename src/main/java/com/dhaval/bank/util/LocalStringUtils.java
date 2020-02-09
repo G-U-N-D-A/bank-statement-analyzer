@@ -1,4 +1,4 @@
-package com.dhaval.util;
+package com.dhaval.bank.util;
 
 import org.apache.commons.lang3.StringUtils;
 

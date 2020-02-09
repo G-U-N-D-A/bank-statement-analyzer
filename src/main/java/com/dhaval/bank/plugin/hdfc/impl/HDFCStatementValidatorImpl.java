@@ -1,7 +1,7 @@
-package com.dhaval.hdfc.impl;
+package com.dhaval.bank.plugin.hdfc.impl;
 
-import com.dhaval.hdfc.api.HDFCStatementValidator;
-import com.dhaval.util.LocalStringUtils;
+import com.dhaval.bank.plugin.hdfc.api.HDFCStatementValidator;
+import com.dhaval.bank.util.LocalStringUtils;
 
 public class HDFCStatementValidatorImpl implements HDFCStatementValidator {
     @Override
@@ -21,6 +21,5 @@ public class HDFCStatementValidatorImpl implements HDFCStatementValidator {
                 && entry.contains("Narration")
                 && entry.contains("Chq/Ref Number");
     }
-
 
 }
