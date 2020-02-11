@@ -10,9 +10,8 @@ import java.util.List;
 public class BankManager {
     StatementManager statementManager = new StatementManager();
 
-    public List<Transaction> getTransactions() throws FileNotFoundException {
+    public List<Transaction> getTransactions(String fileName) throws FileNotFoundException {
         List<Transaction> txns = new ArrayList<>();
-        String fileName = "hdfc-statement.txt";
         txns = statementManager.getTransactions(fileName);
         return txns;
     }
