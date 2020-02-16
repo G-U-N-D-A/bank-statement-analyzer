@@ -30,6 +30,10 @@ public class Category {
         transactionList.add(transaction);
     }
 
+    public List<Transaction> getTransactionList(){
+        return transactionList;
+    }
+
     public boolean matches(String narration) {
         boolean matched = false;
         for(String matchers: this.classifier){
