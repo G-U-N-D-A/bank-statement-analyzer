@@ -24,11 +24,15 @@ public class CategoryManager {
         for(String categoryDef: categoriesDef){
             String[] defAttributes = categoryDef.split(",");
             String name = (defAttributes[0]).trim();
-            String classifier = (defAttributes[1]).trim();
+            String classifier = formatClassifier((defAttributes[1]).trim());
             Category category = new Category(name, classifier);
             categories.add(category);
         }
         return categories;
+    }
+
+    private String formatClassifier(String classifiers) {
+        return classifiers.replaceAll("%", ",");
     }
 
     private List<String> readCategories() throws CategoryManagerException {
@@ -39,4 +43,11 @@ public class CategoryManager {
         }
     }
 
+    public void printCategoryWiseTransactions(List<Category> categories) {
+        for(Category category: categories){
+            System.out.println("****************** " + category.getName() + " ****************** ");
+            category.printAllTransactions();
+            System.out.println();
+        }
+    }
 }

@@ -1,5 +1,7 @@
 package com.dhaval.bank.statement.objects;
 
+import com.dhaval.bank.constants.Constants;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +11,10 @@ public class Category {
     private String name;
     private List<String> classifier;
     private List<Transaction> transactionList;
+    private List<Transaction> withdrawals;
+    private List<Transaction> deposits;
+    private float withdrawnAmount;
+    private float depositedAmount;
 
     public Category(String name, String classifier) {
         this.name = name;
@@ -28,6 +34,19 @@ public class Category {
             transactionList = new ArrayList<>();
         }
         transactionList.add(transaction);
+        if(transaction.getWithdrawalAmount() > 0){
+            if(withdrawals == null) {
+                withdrawals = new ArrayList<>();
+            }
+            withdrawals.add(transaction);
+            withdrawnAmount -= transaction.getWithdrawalAmount();
+        } else {
+            if(deposits == null) {
+                deposits = new ArrayList<>();
+            }
+            deposits.add(transaction);
+            depositedAmount += transaction.getDepositAmount();
+        }
     }
 
     public List<Transaction> getTransactionList(){
@@ -67,5 +86,64 @@ public class Category {
                 ", classifier=" + classifier +
                 ", transactionList=" + transactionList +
                 '}';
+    }
+
+    public List<Transaction> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<Transaction> withdrawals) {
+        this.withdrawals = withdrawals;
+    }
+
+    public List<Transaction> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(List<Transaction> deposits) {
+        this.deposits = deposits;
+    }
+
+    public float getWithdrawnAmount() {
+        return withdrawnAmount;
+    }
+
+    public void setWithdrawnAmount(float withdrawnAmount) {
+        this.withdrawnAmount = withdrawnAmount;
+    }
+
+    public float getDepositedAmount() {
+        return depositedAmount;
+    }
+
+    public void setDepositedAmount(float depositedAmount) {
+        this.depositedAmount = depositedAmount;
+    }
+
+    public void printWithdrawalAmount(){
+        System.out.print(this.getDepositedAmount());
+    }
+    public void printDepositedAmount(){
+        System.out.print(this.getWithdrawnAmount());
+    }
+    public void printWithdrawals(){
+        for(Transaction txn: this.withdrawals){
+            System.out.format("%s\t%f\t%s", txn.getNarration(), txn.getWithdrawalAmount(), txn.getDate());
+        }
+    }
+    public void printDeposits(){
+        for(Transaction txn: this.deposits){
+            System.out.format("%s\t%f\t%s", txn.getNarration(), txn.getDepositAmount(), txn.getDate());
+        }
+    }
+
+    public void printAllTransactions(){
+        if(this.transactionList == null || this.transactionList.isEmpty()){
+            System.out.println("No transactions in this category");
+            return;
+        }
+        for(Transaction txn: this.transactionList){
+            System.out.format(Constants.TRANSACTION_PRINT_FORMAT, txn.getNarration(), txn.getWithdrawalAmount(), txn.getDepositAmount(), txn.getDate());
+        }
     }
 }

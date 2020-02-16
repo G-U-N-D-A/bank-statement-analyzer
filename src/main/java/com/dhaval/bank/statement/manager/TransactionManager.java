@@ -1,14 +1,18 @@
 package com.dhaval.bank.statement.manager;
 
+import com.dhaval.bank.statement.io.writer.ConsoleWriter;
 import com.dhaval.bank.statement.objects.Category;
 import com.dhaval.bank.statement.objects.Transaction;
 
+import java.io.Console;
 import java.util.List;
 
 public class TransactionManager {
     public void classifyTransactions(Transaction txn, List<Category> categories) {
         for(Category category: categories) {
-            classifyTransaction(txn, category);
+            if(!txn.isClassified()) {
+                classifyTransaction(txn, category);
+            }
         }
     }
 
@@ -19,4 +23,11 @@ public class TransactionManager {
         }
     }
 
+    public void printUnclassifiedTransations(List<Transaction> txns){
+        for(Transaction txn: txns){
+            if(!txn.isClassified()) {
+                ConsoleWriter.printTransaction(txn);
+            }
+        }
+    }
 }

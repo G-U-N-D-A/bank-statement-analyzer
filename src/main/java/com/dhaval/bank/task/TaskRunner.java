@@ -2,36 +2,62 @@ package com.dhaval.bank.task;
 
 import com.dhaval.bank.exception.BankManagerException;
 import com.dhaval.bank.manager.BankManager;
-import com.dhaval.bank.statement.io.writer.ConsoleWriter;
 import com.dhaval.bank.statement.objects.Category;
 import com.dhaval.bank.statement.objects.Transaction;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRunner {
+    private static List<Transaction> unclassified;
+    private static List<Transaction> classified;
+
     public static void main(String[] args) throws FileNotFoundException, BankManagerException {
-        String fileName = "hdfc-statement.txt";
         BankManager manager = new BankManager();
-        List<Transaction> txns = manager.getTransactions(fileName);
+        List<Transaction> txns = manager.getTransactions();
         List<Category> categories = manager.classifyTransactions(txns);
 
-//        ConsoleWriter.printCategories(categories);
-//        ConsoleWriter.printTransactions(txns);
+        checkAllTransactionsCoverered(txns);
 
-        ConsoleWriter.printCategoryNarrations(categories);
-        checkUncategoriedTransaction(txns);
+        System.out.println("Total transaction: "+ txns.size());
+        System.out.println("Classified: "+ classified.size());
+        System.out.println("Unclassified: "+ unclassified.size());
+
+        manager.printUnclassifiedTransations(txns);
+
+        manager.printCategoryWiseTransactions(categories);
     }
 
-    private static void checkUncategoriedTransaction(List<Transaction> txns) {
-        int unclassifiedTxns = 0;
+    private static void checkAllTransactionsCoverered(List<Transaction> txns) {
+        unclassified = getUnclassifiedTransactions(txns);
+        classified = getClassifiedTransactions(txns);
+
+        if(unclassified.size() + classified.size() != txns.size()) {
+            System.out.println("Not all covered");
+        } else {
+            System.out.println("All statments were analysed");
+        }
+    }
+
+    private static List<Transaction> getClassifiedTransactions(List<Transaction> txns) {
+        List<Transaction> classified = new ArrayList<>();
         for(Transaction txn: txns){
-            if(!txn.isClassified()) {
-                unclassifiedTxns++;
+            if(txn.isClassified()) {
+                classified.add(txn);
             }
         }
-        ConsoleWriter.printLine("UNCLASSIFIED TRANSACTIONS :" + unclassifiedTxns);
+        return classified;
     }
 
+    private static List<Transaction> getUnclassifiedTransactions(List<Transaction> txns) {
+        List<Transaction> unclassified = new ArrayList<>();
+        for(Transaction txn: txns){
+            if(!txn.isClassified()) {
+                unclassified.add(txn);
+            }
+        }
+        return unclassified;
+    }
 
 }

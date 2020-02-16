@@ -1,10 +1,13 @@
 package com.dhaval.bank.statement.objects;
 
+import com.dhaval.bank.constants.Constants;
+
 import java.util.Objects;
 
 public class Transaction {
     private String date;
     private String narration;
+    private String fullNarration;
     private String chequeOrNarrationNumber;
     private float withdrawalAmount;
     private float depositAmount;
@@ -13,11 +16,20 @@ public class Transaction {
 
     public Transaction(String date, String narration, String chequeOrNarrationNumber, float withdrawalAmount, float depositAmount, float closingBalance) {
         this.date = date;
-        this.narration = narration;
+        formatNarration(narration);
         this.chequeOrNarrationNumber = chequeOrNarrationNumber;
         this.withdrawalAmount = withdrawalAmount;
         this.depositAmount = depositAmount;
         this.closingBalance = closingBalance;
+    }
+
+    private void formatNarration(String narration) {
+        if(narration.length() > Constants.TRANSACTION_NARRATION_LIMIT){
+            this.fullNarration = narration;
+            this.narration = narration.substring(0, Constants.TRANSACTION_NARRATION_LIMIT);
+        } else {
+            this.narration = narration;
+        }
     }
 
     public String getDate() {

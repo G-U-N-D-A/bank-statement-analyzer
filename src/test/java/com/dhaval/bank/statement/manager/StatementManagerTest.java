@@ -15,8 +15,9 @@ public class StatementManagerTest {
 
     @Test
     public void test_getTransactions() throws FileNotFoundException {
-        String sampleTransationFileName = "test-statement.txt";
-        List<Transaction> actualTxns= statementManager.getTransactions(sampleTransationFileName);
+        String [] sampleTransationFileNames = new String[] {"test-statement.txt"};
+        statementManager.setStatementFileNames(sampleTransationFileNames);
+        List<Transaction> actualTxns= statementManager.getTransactions();
         List<Transaction> expectedTxns = DataSource.getExpectedTransactions();
         Assert.assertEquals(expectedTxns, actualTxns);
     }

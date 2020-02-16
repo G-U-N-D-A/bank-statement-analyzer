@@ -18,9 +18,9 @@ public class BankManager {
     StatementManager statementManager = new StatementManager();
     TransactionManager transactionManager = new TransactionManager();
 
-    public List<Transaction> getTransactions(String fileName) throws FileNotFoundException {
+    public List<Transaction> getTransactions() throws FileNotFoundException {
         List<Transaction> txns;
-        txns = statementManager.getTransactions(fileName);
+        txns = statementManager.getTransactions();
         return txns;
     }
 
@@ -37,5 +37,13 @@ public class BankManager {
             }
         }
         return categories;
+    }
+
+    public void printUnclassifiedTransations(List<Transaction> txns) {
+        transactionManager.printUnclassifiedTransations(txns);
+    }
+
+    public void printCategoryWiseTransactions(List<Category> categories) {
+        categoryManager.printCategoryWiseTransactions(categories);
     }
 }
