@@ -18,7 +18,7 @@ public class StatementReader {
 
     public List<Transaction> getTransactions(String fileName) throws FileNotFoundException {
         List<Transaction> txns = new ArrayList<>();
-
+        //todo; refactor to use FileReader
         File file = new File(getClass().getClassLoader().getResource(fileName).getFile());
 
         Scanner scanner = new Scanner(file);

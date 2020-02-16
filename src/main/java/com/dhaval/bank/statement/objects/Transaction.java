@@ -9,6 +9,7 @@ public class Transaction {
     private float withdrawalAmount;
     private float depositAmount;
     private float closingBalance;
+    private boolean classified;
 
     public Transaction(String date, String narration, String chequeOrNarrationNumber, float withdrawalAmount, float depositAmount, float closingBalance) {
         this.date = date;
@@ -41,6 +42,14 @@ public class Transaction {
 
     public float getClosingBalance() {
         return closingBalance;
+    }
+
+    public boolean isClassified() {
+        return classified;
+    }
+
+    public void setClassified(boolean classified) {
+        this.classified = classified;
     }
 
     @Override

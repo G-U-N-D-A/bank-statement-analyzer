@@ -1,0 +1,3 @@
+ATM Withdrwalss, ATW-
+NEFT Transfers, NEFT
+UPI Payments, UPI

@@ -25,21 +25,7 @@ public class StatementReaderTest {
     public void test_getTransactions() throws FileNotFoundException {
         String sampleTransationFileName = "test-statement.txt";
         List<Transaction> actualTxns= stmtReader.getTransactions(sampleTransationFileName);
-        assertSameTransactions(expectedTxns, actualTxns);
-    }
-
-    private void assertSameTransactions(List<Transaction> expected, List<Transaction> actual) {
-        Assert.assertEquals(expected.size(), actual.size());
-        for(Transaction expectedTxn: expected) {
-            boolean found = false;
-            for(Transaction actualTxn: actual){
-                found = actualTxn.equals(expectedTxn);
-                if(found) {
-                    break;
-                }
-            }
-            Assert.assertTrue(found);
-        }
+        Assert.assertEquals(expectedTxns, actualTxns);
     }
 
     @Test
